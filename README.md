@@ -22,3 +22,20 @@ to find disjoint paths between the requested endpoints.
    c. If that fails, try the opposite order (second pair then first).
    d. Only accept the result if the two paths share no pixels.
 
+### Set Up Project - How to Run?
+Note: All the commands are for macOS/Linux
+
+1. Create a python virtual environment
+```bash
+python3 -m venv .venv
+```
+
+2. Activate the virtual environment
+```bash
+source venv/bin/activate
+```
+
+3. Install requirements
+```bash
+pip install -r requirements.txt
+```
