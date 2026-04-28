@@ -46,14 +46,12 @@ def bfs_path(grid: np.ndarray, start: Coord, goal: Coord) -> Optional[List[Coord
    BFS on a boolean grid.
 
     grid[y, x] == True means the pixel is walkable (black).
-    Returns a list of (x, y) from start to goal (inclusive), or None.
+    Returns a list of (x, y) from start to goal (inclusive) or None.
     """
     sx, sy = start
     gx, gy = goal
 
-    if not in_bounds(grid, sx, sy):
-        return None
-    if not in_bounds(grid, gx, gy):
+    if not in_bounds(grid, sx, sy) or not in_bounds(grid, gx, gy):
         return None
     if not grid[sy, sx] or not grid[gy, gx]:
         # start or goal not on a black pixel
