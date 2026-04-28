@@ -145,8 +145,7 @@ def find_two_disjoint_paths(
 
     # try pair2 then pair1
     q2, q1 = attempt_order(pair2_start, pair2_end, pair1_start, pair1_end)
-    if q1 is not None and q2 is not None:
-        if set(q1).isdisjoint(q2):
-            # return to the original pair order
-            return q1, q2
+    if q1 is not None and q2 is not None and set(q1).isdisjoint(q2):
+        # return to the original pair order
+        return q1, q2
     return None, None
