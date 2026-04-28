@@ -98,3 +98,55 @@ def path_exists(universe: np.ndarray, start_x: int, start_y: int, end_x: int, en
     """
     path = bfs_path(universe, (start_x, start_y), (end_x, end_y))
     return path is not None
+
+
+def find_two_disjoint_paths(
+        universe: np.ndarray,
+        pair1_start: Coord,
+        pair1_end: Coord,
+        pair2_start: Coord,
+        pair2_end: Coord,
+) -> Tuple[Optional[List[Coord]], Optional[List[Coord]]]:
+    """
+    Try to find two black only paths that do not share pixels.
+
+    Greedy strategy:
+      1. Find a path for pair 1, then block it and find pair 2.
+      2. If that fails, do the opposite order.
+    """
+
+    def attempt_order(
+            first_start: Coord,
+            first_end: Coord,
+            second_start: Coord,
+            second_end: Coord,
+    ) -> Tuple[Optional[List[Coord]], Optional[List[Coord]]]:
+        first_path = bfs_path(universe, first_start, first_end)
+        if first_path is None:
+            return None, None
+
+        # block first path pixels
+        blocked = universe.copy()
+        for x, y in first_path:
+            blocked[y, x] = False
+
+        second_path = bfs_path(blocked, second_start, second_end)
+        if second_path is None:
+            return None, None
+
+        return first_path, second_path
+
+    # try pair1 then pair2
+    p1, p2 = attempt_order(pair1_start, pair1_end, pair2_start, pair2_end)
+    if p1 is not None and p2 is not None:
+        # Double-check disjointness
+        if set(p1).isdisjoint(p2):
+            return p1, p2
+
+    # try pair2 then pair1
+    q2, q1 = attempt_order(pair2_start, pair2_end, pair1_start, pair1_end)
+    if q1 is not None and q2 is not None:
+        if set(q1).isdisjoint(q2):
+            # return to the original pair order
+            return q1, q2
+    return None, None
