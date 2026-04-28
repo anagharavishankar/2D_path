@@ -39,3 +39,22 @@ source venv/bin/activate
 ```bash
 pip install -r requirements.txt
 ```
+
+4. Run the command to get the output:
+General command structure
+```bash
+python main.py <input image path> --start <start indexes> --end <end indexes> --out <output path>
+```
+Ex 1:
+```bash
+python main.py input_images/bars.png --start 0,0 --end 2,5 --out output_images/bars_output.png
+```
+Ex 2:
+```bash
+python main.py input_images/polygons.png --start 0,0 --end 50,50 --out output_images/polygons_output.png
+
+```
+Ex 3:
+```bash
+python main.py input_images/small-ring.png --start 0,0 --end 2,4 --out output_images/small-ring_output.png 
+```
